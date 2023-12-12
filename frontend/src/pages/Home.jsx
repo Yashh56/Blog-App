@@ -15,8 +15,8 @@ function Home() {
   const [posts, setPosts] = React.useState([])
   const { search } = useLocation()
   const [noResult, setNoResult] = React.useState(false)
-  const [loader , setLoader] = React.useState(false)
-  const {user} = useContext(UserContext)
+  const [loader, setLoader] = React.useState(false)
+  const { user } = useContext(UserContext)
 
   const fetchPosts = async () => {
     try {
@@ -42,17 +42,17 @@ function Home() {
     <>
       <Navbar />
       <div className=' md:px-8  md:min-h-[80vh] min-h-[50vh]'>
-        {loader?<div className='flex h-[40vh] justify-center text-center items-center '><Loader/></div>:!noResult ? 
-        posts.map((post) => {
-          return <>
-          <Link to={user ? `/posts/post/${post._id}`:'/login'}>
-          <HomePosts key={post._id} post={post} />
-          </Link>
-          </>
-        }):<h1 className='text-2xl text-center'>No Result Found</h1>}
-        
-      
-        <Footer/>
+        {loader ? <div className='flex h-[40vh] justify-center text-center items-center '><Loader /></div> : !noResult ?
+          posts.map((post) => {
+            return <>
+              <Link to={user ? `/posts/post/${post._id}` : '/login'}>
+                <HomePosts key={post._id} post={post} />
+              </Link>
+            </>
+          }) : <h1 className='text-2xl text-center'>No Result Found</h1>}
+
+
+        <Footer />
       </div>
     </>
 

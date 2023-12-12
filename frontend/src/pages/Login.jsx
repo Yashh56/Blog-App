@@ -12,10 +12,10 @@ function Login() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
     const navigate = useNavigate()
-    const {setUser} = useContext(UserContext)
+    const { setUser } = useContext(UserContext)
     const handleLogin = async (e) => {
         try {
-            const res = await axios.post(URL + '/api/auth/login', { email, password },{withCredentials:true})
+            const res = await axios.post(URL + '/api/auth/login', { email, password }, { withCredentials: true })
             setUser(res.data)
             navigate('/')
             setEmail(res.data.email)
