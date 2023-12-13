@@ -1,2 +1,2 @@
-export const URL = 'https://blog-app-backend-coral.vercel.app';
-export const IF = 'https://blog-app-backend-coral.vercel.app/images/'
+export const URL = 'http://localhost:3000';
+export const IF = 'http://localhost:3000/images/'
