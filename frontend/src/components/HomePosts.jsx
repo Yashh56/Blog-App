@@ -1,13 +1,15 @@
-import { IF } from "../url"
-
-
+/* eslint-disable react/prop-types */
 
 const HomePosts = ({ post }) => {
   return (
     <div className=" md:w-full  md:flex  md:space-x-4  md:mt-8 md:px-[200px] px-8">
       {/* left */}
       <div className=" md:w-[35%]  md:h-[200px]  md:flex  md:justify-center  md:items-center">
-        <img src={IF + post.photo} className="md:h-full  md:w-full  md:object-cover" alt="" srcset="" />
+        <img
+          src={post.photo}
+          className="md:h-full  md:w-full  md:object-cover"
+          alt=""
+        />
       </div>
       {/* right */}
       <div className=" md:flex  md:flex-col  md:w-[65%]">
@@ -21,9 +23,11 @@ const HomePosts = ({ post }) => {
             <p>{new Date(post.updatedAt).toString().slice(16, 24)}</p>
           </div>
         </div>
-        <p className="text-sm md:text-lg">{post.desc.slice(0, 200) + "...Read More"}</p>
+        <p className="text-sm md:text-lg">
+          {post.desc.slice(0, 200) + "...Read More"}
+        </p>
       </div>
     </div>
-  )
-}
-export default HomePosts
+  );
+};
+export default HomePosts;
