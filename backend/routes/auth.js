@@ -25,27 +25,40 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.body.email })
-
+        const user = await User.findOne({ email: req.body.email });
         if (!user) {
-            res.status(401).json("User Not Found")
+            return res.status(401).json({ message: "User Not Found" });
         }
 
-        const validPassword = await bcrypt.compare(req.body.password, user.password)
-
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) {
-            res.status(404).json("Wrong Password")
+            return res.status(401).json({ message: "Wrong Password" });
         }
-        const token = jwt.sign({ _id: user._id, user: user.username, email: user.email }, process.env.SECRET, { expiresIn: '3d' })
-        const { password, ...info } = user._doc
-        res.cookie('token', token).status(200).json({ ...info, token })
-        // res.status(200).json(user)
+
+        const token = jwt.sign(
+            { _id: user._id, user: user.username, email: user.email },
+            process.env.SECRET,
+            { expiresIn: '3d' }
+        );
+
+        const { password, ...info } = user._doc;
+
+        // Proper Cookie Configuration:
+        const isProduction = process.env.NODE_ENV === "production";
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? "None" : "Lax",
+            maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+        });
+
+        res.status(200).json({ ...info });
     } catch (error) {
-
-        res.status(500).json(error)
-
+        console.error("Login error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-})
+});
+
 
 
 // Logout
